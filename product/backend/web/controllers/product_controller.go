@@ -27,7 +27,7 @@ func (p *ProductController) GetAll() mvc.View {
 func (p *ProductController) PostUpdate() {
 	product := &datamodels.Product{}
 	p.Ctx.Request().ParseForm()
-	dec := common.NewDecoder(&common.DecoderOption(TagName:"form"))
+	dec := common.NewDecoder(&common.DecoderOptions{TagName:"form"})
 	err := dec.Decode(p.Ctx.Request().Form, product)
 	if err != nil {
 		p.Ctx.Application().Logger().Debug(err)
@@ -49,7 +49,7 @@ func (p *ProductController) GetAdd() mvc.View {
 func (p *ProductController) PostAdd() {
 	product := &datamodels.Product{}
 	p.Ctx.Request().ParseForm()
-	dec := common.NewDecoder(&common.DecoderOption(TagName:"form"))
+	dec := common.NewDecoder(&common.DecoderOptions{TagName:"form"})
 	err := dec.Decode(p.Ctx.Request().Form, product)
 	if err != nil {
 		p.Ctx.Application().Logger().Debug(err)

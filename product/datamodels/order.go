@@ -2,8 +2,8 @@ package datamodels
 
 type Order struct {
 	ID          int64 `sql:"ID"`
-	UserId      int64 `sql:"userId"`
-	ProductId   int64 `sql:"productId"`
+	UserId      int64 `sql:"userID"`
+	ProductId   int64 `sql:"productID"`
 	OrderStatus int64 `sql:"orderStatus"`
 }
 

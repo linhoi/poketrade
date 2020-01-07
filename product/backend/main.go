@@ -14,8 +14,8 @@ import (
 
 func main(){
 	app := iris.New()
-	app.Logger().SetLevel("gebug")
-	template := iris.HTML("./backend/web/views",".hmtl").Layout("shared/layout.html").Reload(true)
+	app.Logger().SetLevel("debug")
+	template := iris.HTML("./backend/web/views",".html").Layout("shared/layout.html").Reload(true)
 	app.RegisterView(template)
 	app.HandleDir("/assets","./backend/web/assets")
 	app.OnAnyErrorCode(func(ctx iris.Context){
@@ -45,7 +45,7 @@ func main(){
 	orderParty := app.Party("/order")
 	order := mvc.New(orderParty)
 	order.Register(ctx,orderService)
-	order.Handle(new(controllers.ProductController))
+	order.Handle(new(controllers.OrderController))
 
 	app.Run(
 		iris.Addr("localhost:8080"),

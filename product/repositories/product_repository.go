@@ -61,7 +61,7 @@ func (p *ProductManager) Delete(productID int64) bool {
 	if err := p.Conn(); err!= nil {
 		return false
 	}
-	sql := "delete from product where ID=?"
+	sql := "delete from product where ID = ?"
 	stmt,err  := p.mysqlConn.Prepare(sql)
 	if err != nil {
 		 return  false
@@ -73,12 +73,17 @@ func (p *ProductManager) Delete(productID int64) bool {
 	return true
 }
 
-func (p ProductManager) Update(product *datamodels.Product) error {
+func (p *ProductManager) Update(product *datamodels.Product) error {
 	if err := p.Conn(); err != nil {
 		return err
 	}
 
-	sql := "update produce set set productName=?,productNum=?,productImage=?,productUrl=? where ID="+strconv.FormatInt(product.ID,10)
+	sql := "update product " +
+		"set productName = ?," +
+		"productNum = ?," +
+		"productImage = ?," +
+		"productUrl= ? " +
+		"where ID = "+strconv.FormatInt(product.ID,10)
 
 	stmt ,err := p.mysqlConn.Prepare(sql)
 	if err != nil { return err}
@@ -88,11 +93,11 @@ func (p ProductManager) Update(product *datamodels.Product) error {
 	return nil
 }
 
-func (p ProductManager) SelectByKey(productID int64) (productResult *datamodels.Product, err error) {
+func (p *ProductManager) SelectByKey(productID int64) (productResult *datamodels.Product, err error) {
 	if err := p.Conn(); err != nil {
 		return &datamodels.Product{}, err
 	}
-	sql := "select * from"+p.table+"where ID="+strconv.FormatInt(productID,10)
+	sql := "select * from "+p.table+" where ID = "+strconv.FormatInt(productID,10)
 
 	row ,err := p.mysqlConn.Query(sql)
 	if err != nil { return &datamodels.Product{},err}
@@ -102,6 +107,8 @@ func (p ProductManager) SelectByKey(productID int64) (productResult *datamodels.
 	result := common.GetResultRow(row)
 	if len(result) == 0 { return &datamodels.Product{}, err}
 
+	//传值还是传指针？注意判别
+	productResult = &datamodels.Product{}
 	common.DataToStructByTagSql(result, productResult)
 
 	return productResult, nil
@@ -111,7 +118,7 @@ func (p *ProductManager) SelectAll() (productList []*datamodels.Product,err erro
 	if err := p.Conn(); err != nil {
 		return nil, err
 	}
-	sql := "select * from"+p.table
+	sql := "select * from "+p.table
 
 
 	rows, err := p.mysqlConn.Query(sql)
@@ -119,7 +126,7 @@ func (p *ProductManager) SelectAll() (productList []*datamodels.Product,err erro
 	if err != nil { return nil,err}
 
 	result := common.GetResultRows(rows)
-	if len(result) == 0 { return nil, err}
+	if len(result) == 0 { return nil, nil}
 
 
 	for _, r := range result {

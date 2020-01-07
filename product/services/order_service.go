@@ -7,7 +7,7 @@ import (
 
 type IOrderService interface {
 	GetOrderByID(orderId int64) (order *datamodels.Order,err error)
-	GetAllOrder()(orderList []*datamodels.Order, err error)
+	GetAllOrder()( []*datamodels.Order,  error)
 	InsertOrder(order *datamodels.Order) (orderId int64, err error)
 	GetAllOrderWithInfo() (orderMap map[int]map[string]string, err error)
 	DeleteOrderByID(orderId int64) bool
@@ -22,23 +22,23 @@ func (o *OrderService) GetOrderByID(orderId int64) (order *datamodels.Order, err
 	return o.OrderRepository.SelectByKey(orderId)
 }
 
-func (o OrderService) GetAllOrder() (orderList []*datamodels.Order, err error) {
+func (o *OrderService) GetAllOrder() ( []*datamodels.Order,error) {
 	return o.OrderRepository.SelectAll()
 }
 
-func (o OrderService) InsertOrder(order *datamodels.Order) (orderId int64, err error) {
+func (o *OrderService) InsertOrder(order *datamodels.Order) (orderId int64, err error) {
 	return o.OrderRepository.Insert(order)
 }
 
-func (o OrderService) GetAllOrderWithInfo() (orderMap map[int]map[string]string, err error) {
+func (o *OrderService) GetAllOrderWithInfo() (orderMap map[int]map[string]string, err error) {
 	return o.OrderRepository.SelectAllWithInfo()
 }
 
-func (o OrderService) DeleteOrderByID(orderId int64) bool {
+func (o *OrderService) DeleteOrderByID(orderId int64) bool {
 	return o.OrderRepository.Delete(orderId)
 }
 
-func (o OrderService) UpdateOrder(order *datamodels.Order) (err error) {
+func (o *OrderService) UpdateOrder(order *datamodels.Order) (err error) {
 	return o.OrderRepository.Update(order)
 }
 

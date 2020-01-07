@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"database/sql"
-	"golang.org/x/text/unicode/rangetable"
 	"product/common"
 	"product/datamodels"
 	"strconv"
@@ -39,16 +38,16 @@ func (o *OrderManagerRepository) Conn() error {
 
 func (o *OrderManagerRepository) Insert(order *datamodels.Order) (productId int64, err error) {
 	if err := o.Conn(); err != nil{
-		return
+		return 0,err
 	}
-	sql := "insert into"+o.table+"userId=?,productId=?,orderStatus=?"
+	sql := "insert into "+o.table+" userId=?,productId=?,orderStatus=?"
 	stmt, err := o.mysqlConn.Prepare(sql)
 	if err != nil{
-		return
+		return 0,err
 	}
 	result, err := stmt.Exec(order.UserId,order.ProductId,order.OrderStatus)
 	if err != nil{
-		return
+		return 0,err
 	}
 
 	return result.LastInsertId()
@@ -58,7 +57,7 @@ func (o *OrderManagerRepository) Delete(orderId int64) bool {
 	if err := o.Conn(); err != nil{
 		return false
 	}
-	sql := "delete from table "+o.table+" where ID=?"
+	sql := "delete from table "+o.table+" where ID = ?"
 	stmt, err := o.mysqlConn.Prepare(sql)
 	if err != nil{
 		return false
@@ -74,7 +73,7 @@ func (o *OrderManagerRepository) Update(order *datamodels.Order) error {
 	if err := o.Conn(); err != nil{
 		return err
 	}
-	sql := "update order set userId=?,productId=?,orderStatus=? where ID="+ strconv.FormatInt(order.ID, 10)
+	sql := "update order set userId=?,productId=?,orderStatus=? where ID = "+ strconv.FormatInt(order.ID, 10)
 	stmt , err := o.mysqlConn.Prepare(sql)
 	if err != nil{
 		return err
@@ -90,7 +89,7 @@ func (o *OrderManagerRepository) SelectByKey(orderId int64) (orderResult *datamo
 	if err := o.Conn(); err != nil{
 		return &datamodels.Order{}, err
 	}
-	sql := "select from table order where ID="+strconv.FormatInt(orderId, 10)
+	sql := "select from table order where ID = " +strconv.FormatInt(orderId, 10)
 	row , err := o.mysqlConn.Query(sql)
 	if err != nil{
 		return &datamodels.Order{},err
@@ -104,16 +103,17 @@ func (o *OrderManagerRepository) SelectByKey(orderId int64) (orderResult *datamo
 
 }
 
-func (o OrderManagerRepository) SelectAll() (orderList []*datamodels.Order,err error) {
+func (o *OrderManagerRepository) SelectAll() (orderList []*datamodels.Order,err error) {
 	if err := o.Conn(); err != nil{
 		return nil, err
 	}
-	sql := "select * from " + o.table
+	sql := "select * from `order`"
 	rows , err := o.mysqlConn.Query(sql)
 	if err != nil{
 		return nil,err
 	}
 	defer  rows.Close()
+
 
 	result := common.GetResultRows(rows)
 	if len(result) == 0 { return nil, err}
@@ -122,10 +122,10 @@ func (o OrderManagerRepository) SelectAll() (orderList []*datamodels.Order,err e
 		common.DataToStructByTagSql(r, oneOrder)
 		orderList = append(orderList,oneOrder)
 	}
-	return orderList, nil
+	return
 }
 
-func (o OrderManagerRepository) SelectAllWithInfo() (orderMap map[int]map[string]string, err error) {
+func (o *OrderManagerRepository) SelectAllWithInfo() (orderMap map[int]map[string]string, err error) {
 	if err := o.Conn(); err != nil{
 		return nil, err
 	}
