@@ -60,7 +60,7 @@ func (c *UserController) PostLogin() mvc.Response {
 	user, isOk := c.Service.IsPwdSuccess(userName,password)
 	if !isOk {
 		return mvc.Response{
-			Path:"user/login",
+			Path:"login", //why is not user/login
 		}
 	}
 

@@ -6,8 +6,8 @@ import (
 	"github.com/kataras/iris/v12/mvc"
 	"github.com/kataras/iris/v12/sessions"
 	"product/common"
-	"product/fronted/middleware"
-	"product/fronted/web/controllers"
+	"product/frontend/middleware"
+	"product/frontend/web/controllers"
 	"product/repositories"
 	"product/services"
 	"time"
@@ -16,9 +16,9 @@ import (
 func main(){
 	app := iris.New()
 	app.Logger().SetLevel("debug")
-	template := iris.HTML("./fronted/web/views",".html").Layout("shared/layout.html").Reload(true)
+	template := iris.HTML("./frontend/web/views",".html").Layout("shared/layout.html").Reload(true)
 	app.RegisterView(template)
-	app.HandleDir("public","./fronted/web/public")
+	app.HandleDir("public","./frontend/web/public")
 
 	//app.StaticWeb("/html","./fronted/web/htmlProductShow")
 

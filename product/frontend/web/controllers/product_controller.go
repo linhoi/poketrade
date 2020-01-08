@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/kataras/iris/mvc"
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/mvc"
 	"github.com/kataras/iris/v12/sessions"
 	"product/datamodels"
 	"product/services"
@@ -24,7 +24,7 @@ func (p *ProductController) GetDetail() mvc.View {
 	}
 
 	return mvc.View{
-		Layout:"shared/productlayout.html",
+		Layout:"shared/productLayout.html",
 		Name: "product/view.html",
 		Data: iris.Map{
 			"product": product,
