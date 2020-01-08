@@ -8,18 +8,18 @@ import (
 
 type OrderController struct{
 	Ctx iris.Context
-	OrderService services.OrderService
+	OrderService services.IOrderService  //a  bug service.OrderService
 }
 
-func (o *OrderController) GetAll() mvc.View {
-	orderList, err := o.OrderService.GetAllOrder()
+func (o *OrderController) Get() mvc.View {
+	orderArray, err := o.OrderService.GetAllOrderInfo()
 	if err != nil {
 		o.Ctx.Application().Logger().Debug("Get Order Information Fail")
 	}
 	return mvc.View{
 		Name:"order/view.html",
 		Data: iris.Map{
-			"orderList":orderList,
+			"order":orderArray,
 		},
 	}
 }

@@ -107,7 +107,7 @@ func (o *OrderManagerRepository) SelectAll() (orderList []*datamodels.Order,err 
 	if err := o.Conn(); err != nil{
 		return nil, err
 	}
-	sql := "select * from `order`"
+	sql := "select * from "+ o.table
 	rows , err := o.mysqlConn.Query(sql)
 	if err != nil{
 		return nil,err
@@ -129,7 +129,7 @@ func (o *OrderManagerRepository) SelectAllWithInfo() (orderMap map[int]map[strin
 	if err := o.Conn(); err != nil{
 		return nil, err
 	}
-	sql := "select o.Id,p.productName,o.orderStatus from order as o left join product as p on o.productId=p.ID"
+	sql := "select o.ID,p.productName,o.orderStatus from `order` as o left join product as p on o.productID = p.ID"
 	rows , err := o.mysqlConn.Query(sql)
 	if err != nil{
 		return nil,err

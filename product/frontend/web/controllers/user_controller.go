@@ -69,6 +69,6 @@ func (c *UserController) PostLogin() mvc.Response {
 
 	c.Session.Set("userID", strconv.FormatInt(user.ID,10))
 	return mvc.Response{
-		Path: "/product/",
+		Path: "/product/detail",
 	}
 }
