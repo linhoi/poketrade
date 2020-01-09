@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1de104-fc63-40c8-902d-ce865d71ed51" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/staticFrontend.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/controllers/order_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/controllers/order_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/views/order/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/views/order/view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/controllers/user_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/controllers/user_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repositories/order_repository.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/order_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/controllers/product_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/controllers/product_controller.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +56,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build main.go">
+  <component name="RunManager" selected="Go Build.go build staticFrontend.go">
     <configuration name="go build main.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="product" />
       <working_directory value="$PROJECT_DIR$" />
@@ -95,22 +93,22 @@
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
-    <configuration name="go build product_repository.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration name="go build staticFrontend.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="product" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/repositories/product_repository.go" />
+      <filePath value="$PROJECT_DIR$/frontend/staticFrontend.go" />
       <package value="product" />
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build staticFrontend.go" />
         <item itemvalue="Go Build.go build main.go" />
         <item itemvalue="Go Build.go build main.go (2)" />
         <item itemvalue="Go Build.go build main.go (1)" />
         <item itemvalue="Go Build.go build order_service.go" />
-        <item itemvalue="Go Build.go build product_repository.go" />
       </list>
     </recent_temporary>
   </component>

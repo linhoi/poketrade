@@ -20,7 +20,7 @@ func main(){
 	app.RegisterView(template)
 	app.HandleDir("public","./frontend/web/public")
 
-	//app.StaticWeb("/html","./fronted/web/htmlProductShow")
+	app.HandleDir("html","./frontend/web/htmlProductShow")
 
 	app.OnAnyErrorCode(func(ctx iris.Context){
 		ctx.ViewData("message",ctx.Values().GetStringDefault("message", "访问的页面出错！"))
