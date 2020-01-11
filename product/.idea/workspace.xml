@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1de104-fc63-40c8-902d-ce865d71ed51" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/staticFrontend.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/consistent_hash.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/filter.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/validate/validate.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/controllers/product_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/controllers/product_controller.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
