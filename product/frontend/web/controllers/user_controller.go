@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/mvc"
 	"github.com/kataras/iris/v12/sessions"
 	"product/datamodels"
+	"product/encrypt"
 	"product/services"
 	"product/tool"
 	"strconv"
@@ -66,8 +68,13 @@ func (c *UserController) PostLogin() mvc.Response {
 
 	//add userID to Cookie
 	tool.GlobalCookie(c.Ctx,"uid",strconv.FormatInt(user.ID,10))
-
-	c.Session.Set("userID", strconv.FormatInt(user.ID,10))
+	uidByte := []byte(strconv.FormatInt(user.ID, 10))
+	uidString, err := encrypt.EnPwdCode(uidByte)
+	if err != nil {
+		fmt.Println(err)
+	}
+	tool.GlobalCookie(c.Ctx, "sign", uidString)
+	//c.Session.Set("userID", strconv.FormatInt(user.ID,10))
 	return mvc.Response{
 		Path: "/product/detail",
 	}
