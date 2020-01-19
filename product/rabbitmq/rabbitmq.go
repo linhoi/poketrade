@@ -1,14 +1,16 @@
 package rabbitmq
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/streadway/amqp"
 	"log"
+	"product/datamodels"
+	"product/services"
 	"sync"
-	"time"
 )
 //url :   amqp://username:password@rabbitserver_address:server_port/virtual_host
-const MQURL = "amqp://hikari:123456@127.0.0.1:5672/host"
+const MQURL = "amqp://hikari:123456@127.0.0.1:5672/poketrade"
 
 type RabbitMQ struct {
 	conn *amqp.Connection
@@ -72,9 +74,9 @@ func (r *RabbitMQ) PublishSimple(message string) error {
 	return nil
 }
 
-func (r *RabbitMQ) ConsumeSimple(){
+func (r *RabbitMQ) ConsumeSimple(orderService services.IOrderService,productService services.IProductService ){
 	//1. apply for a queue
-	_, err := r.channel.QueueDeclare(
+	q, err := r.channel.QueueDeclare(
 		r.QueueName,
 		false,
 		false,
@@ -86,9 +88,15 @@ func (r *RabbitMQ) ConsumeSimple(){
 		fmt.Println(err)
 	}
 
+	_ = r.channel.Qos(
+		1,
+		0,
+		false,
+	)
+
 	//2. receive message
 	msgs, err := r.channel.Consume(
-		r.QueueName,
+		q.Name,
 		//saperate different consumer
 		"",
 		//ack to RabbitMQ when queue is consumed
@@ -108,6 +116,24 @@ func (r *RabbitMQ) ConsumeSimple(){
 	go func(){
 		for d := range msgs{
 			log.Printf("Receive a message: %s",d.Body)
+			message := &datamodels.Message{}
+			err := json.Unmarshal([]byte(d.Body),message)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			_, err = orderService.InserOrderByMessage(message)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			err = productService.SubProductNum(message.ProductID)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			d.Ack(false)
+
 		}
 	}()
 	log.Printf("Waiting for messages, press CTRL + S to exit")

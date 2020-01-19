@@ -324,11 +324,12 @@ func main() {
 
 	// filter
 	filter := common.NewFilter()
-	filter.RegisterFilterUri("/check",Auth)
 	filter.RegisterFilterUri("/checkRight",Auth)
+	filter.RegisterFilterUri("/check",Auth)
 
-	http.HandleFunc("/check",filter.Handle(Check))
 	http.HandleFunc("/checkRight",filter.Handle(CheckRight))
+	http.HandleFunc("/check",filter.Handle(Check))
+
 	log.Fatal(http.ListenAndServe(":8083",nil))
 	//http.ListenAndServe(":8083",nil)
 }

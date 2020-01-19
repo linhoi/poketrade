@@ -12,11 +12,13 @@ type IOrderService interface {
 	GetAllOrderInfo() (map[int]map[string]string,  error)
 	DeleteOrderByID(orderId int64) bool
 	UpdateOrder(order *datamodels.Order) (err error)
+	InserOrderByMessage(message *datamodels.Message) (interface{}, error)
 }
 
 type OrderService struct{
 	OrderRepository repositories.IOrderRepository
 }
+
 
 func (o *OrderService) GetOrderByID(orderId int64) (order *datamodels.Order, err error) {
 	return o.OrderRepository.SelectByKey(orderId)
@@ -40,6 +42,15 @@ func (o *OrderService) DeleteOrderByID(orderId int64) bool {
 
 func (o *OrderService) UpdateOrder(order *datamodels.Order) (err error) {
 	return o.OrderRepository.Update(order)
+}
+
+func (o *OrderService) InserOrderByMessage(message *datamodels.Message) (interface{}, error) {
+	order := &datamodels.Order{
+		UserId:      message.UserID,
+		ProductId:   message.ProductID,
+		OrderStatus: datamodels.OrderSuccess,
+	}
+	return o.OrderRepository.Insert(order)
 }
 
 func NewOrderService(repository repositories.IOrderRepository) IOrderService{
