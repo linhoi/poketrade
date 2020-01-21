@@ -1,5 +1,5 @@
 # poketrade
 A Web Server written by go with Iris framework . It is under development.The main Project is under product directory. 
-![](./assets/architecture.png)
-
+## Architecture
+![](../assets/architecture.png)
 
